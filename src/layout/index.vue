@@ -5,6 +5,7 @@
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
+        <tags-view />
       </div>
       <app-main />
     </div>
@@ -12,18 +13,23 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+// import { mapState } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
+    /*...mapState({
+      needTagsView: state => state.settings.tagsView,
+    }),*/
     sidebar() {
       return this.$store.state.app.sidebar
     },

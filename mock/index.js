@@ -5,7 +5,7 @@ import user from './user'
 import table from './table'
 
 const mocks = [
-  ...user,
+  // ...user,
   ...table
 ]
 

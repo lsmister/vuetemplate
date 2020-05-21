@@ -32,6 +32,18 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -51,7 +63,20 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard' },
+      affix: true
+    }]
+  },
+
+  {
+    path: '/personal',
+    component: Layout,
+    redirect: '/personal',
+    children: [{
+      path: 'personal',
+      name: 'Personal',
+      component: () => import('@/views/personal/index'),
+      meta: { title: '个人主页', icon: 'user' }
     }]
   },
 
