@@ -56,7 +56,7 @@
         />
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
   </div>
@@ -163,6 +163,22 @@ export default {
       border-radius: 5px;
       color: #454545;
     }
+
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+      color: #888;
+    }
+
+    input:-moz-placeholder, textarea:-moz-placeholder {
+      color: #888;
+    }
+
+    input::-moz-placeholder, textarea::-moz-placeholder {
+      color: #888;
+    }
+
+    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+      color: #888;
+    }
   }
 </style>
 
@@ -253,5 +269,6 @@ export default {
         display: none;
       }
     }
+
   }
 </style>

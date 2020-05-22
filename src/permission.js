@@ -33,12 +33,15 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
+          //const routess = await store.dispatch('user/getUserRole') //通过用户角色获取路由
+
+          // console.log(routess)
 
           next()
         } catch (error) {
           // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
+          // await store.dispatch('user/resetToken')
+          // Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

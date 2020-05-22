@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getUserRole } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -63,6 +63,28 @@ const actions = {
       })
     })
   },
+
+/*getUserRole({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getUserRole().then(response => {
+        console.log(response)
+        /!*const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { name, avatar } = data
+
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)*!/
+        const data = {id:1,name:'343'}
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },*/
 
   // user logout
   logout({ commit, state }) {
