@@ -64,11 +64,12 @@ const actions = {
     })
   },
 
-/*getUserRole({ commit, state }) {
+  //获取角色路由
+  getUserRole({ commit, state }) {
     return new Promise((resolve, reject) => {
       getUserRole().then(response => {
         console.log(response)
-        /!*const { data } = response
+        /*const { data } = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -77,14 +78,14 @@ const actions = {
         const { name, avatar } = data
 
         commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)*!/
+        commit('SET_AVATAR', avatar)*/
         const data = {id:1,name:'343'}
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
-  },*/
+  },
 
   // user logout
   logout({ commit, state }) {

@@ -32,8 +32,8 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-          //const routess = await store.dispatch('user/getUserRole') //通过用户角色获取路由
+          // await store.dispatch('user/getInfo')
+          const routess = await store.dispatch('user/getUserRole') //通过用户角色获取路由
 
           // console.log(routess)
 
@@ -42,7 +42,9 @@ router.beforeEach(async(to, from, next) => {
           // remove token and go to login page to re-login
           // await store.dispatch('user/resetToken')
           // Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
+          // next(`/login?redirect=${to.path}`)
+          console.log('错误: '+error)
+          next()
           NProgress.done()
         }
       }
