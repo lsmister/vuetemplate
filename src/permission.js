@@ -33,11 +33,18 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-          const routess = await store.dispatch('user/getUserRole') //通过用户角色获取路由
+          //const routes = await store.dispatch('user/getUserRole') //通过用户角色获取路由
 
-          // console.log(routess)
+          // console.log(dataArrayToRoutes(routes))
+          // const asyncRoutes = dataArrayToRoutes(routes)
+          // router.addRoutes(asyncRoutes)
+          // const c = router.options.routes.concat(asyncRoutes)
+          // console.log(router.options.routes);
+          // console.log(asyncRoutes);
+          // router.options.routes=c;
+          // console.log(router.options.routes);
 
-          next()
+          next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           // await store.dispatch('user/resetToken')
@@ -67,3 +74,25 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done()
 })
+
+//根据后台权限生成路由 - 但指令权限和icon未完成
+/*function dataArrayToRoutes(data) {
+  const res = []
+  data.forEach(item => {
+    const tmp = { ...item }
+    if (tmp.component === 'Layout') {
+      tmp.component = Layout
+    } else {
+      let sub_view = tmp.component
+      sub_view = sub_view.replace(/^\/!*!/g, '')
+      tmp.path = '/'+tmp.path
+      tmp.component = () => import(`@/views/${sub_view}`)  //这里很重要，把view动态加载进来，而且似乎我只找到这样的写法，用拼接不行，然后 views 后面没有斜杆也不行
+    }
+    if (tmp.children) {
+      tmp.meta = {title:tmp.name, icon:'user'}
+      tmp.children = dataArrayToRoutes(tmp.children)
+    }
+    res.push(tmp)
+  })
+  return res
+}*/
