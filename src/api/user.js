@@ -21,6 +21,14 @@ export function getList() {
   })
 }
 
+//角色列表
+export function getRoleList() {
+  return request({
+    url: '/user/rolelist',
+    method: 'get'
+  })
+}
+
 //用户基本信息
 export function getInfo() {
   return request({
@@ -52,6 +60,22 @@ export function updateGoogleStatus(status) {
     method: 'put',
     headers: { 'Content-type': 'application/json' },
     data: {
+      status: status
+    },
+    transformRequest: [function(data) {
+      return JSON.stringify(data)
+    }]
+  })
+}
+
+// 修改状态
+export function updateStatus(id, status) {
+  return request({
+    url: `/user/update_status/${id}`,
+    method: 'put',
+    headers: { 'Content-type': 'application/json' },
+    data: {
+      id: id,
       status: status
     },
     transformRequest: [function(data) {

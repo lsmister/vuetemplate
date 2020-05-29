@@ -1,4 +1,3 @@
-<!--
 <template>
   <div class="app-container">
     <div class="filter-container">
@@ -41,7 +40,7 @@
       <el-table-column align="center" label="谷歌验证">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.google_status"
+            v-model="scope.row.status"
             active-color="#13ce66"
             inactive-color="#999"
             :active-value="1"
@@ -70,19 +69,19 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="45%">
-      <el-form ref="dataForm" :rules="rules" :model="subForm" label-position="right" label-width="90px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="subForm" label-position="right" label-width="120px" style="width: 400px; margin-left:50px;">
         <el-form-item label="登录账号(英文)" prop="username">
-          <el-input v-model="form.username" placeholder="请输入账号" />
+          <el-input v-model="subForm.username" placeholder="请输入账号" />
         </el-form-item>
 
         <el-form-item label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+          <el-input v-model="subForm.name" placeholder="请输入名称" />
         </el-form-item>
 
         <el-form-item label="角色" prop="role_id">
-          <el-select v-model="form.role_id" placeholder="请选择角色">
+          <el-select v-model="subForm.role_id" placeholder="请选择角色">
             <el-option
-              v-for="item in roles"
+              v-for="item in roleList"
               :key="item.id"
               :label="item.name"
               :value="item.id">
@@ -91,8 +90,8 @@
         </el-form-item>
 
         <el-form-item label="状态" prop="status">
-          <el-radio v-model="form.status" :label="1">启用</el-radio>
-          <el-radio v-model="form.status" :label="0">禁用</el-radio>
+          <el-radio v-model="subForm.status" :label="1">启用</el-radio>
+          <el-radio v-model="subForm.status" :label="0">禁用</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -123,7 +122,7 @@ export default {
     return {
       list: [],
       total: 0,
-      roles: [],
+      roleList: [],
       subForm: {
         id: undefined,
         username: '',
@@ -159,6 +158,7 @@ export default {
   },
   created() {
     this.getList()
+    this.getRoleList()
   },
   methods: {
     // 初始化表单
@@ -187,6 +187,7 @@ export default {
     },
     handleUpdate(row) {
       this.subForm = Object.assign({}, row) // copy obj
+      // console.log(this.subForm)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -249,13 +250,16 @@ export default {
       UserOpt.getList(this.listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
       }).catch(error => {
-        console.log('权限列表获取失败')
+        console.log('用户列表获取失败')
+      })
+    },
+    getRoleList() {
+      UserOpt.getRoleList().then(response => {
+        console.log(response)
+        this.roleList = response.data
+      }).catch(error => {
+        console.log('角色列表获取失败')
       })
     },
     changeStatus(index, row) {
@@ -303,4 +307,3 @@ export default {
     padding: 5px 0;
   }
 </style>
--->
