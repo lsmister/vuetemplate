@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+//登录
 export function login(data) {
   return request({
     url: '/user/login',
@@ -12,6 +13,15 @@ export function login(data) {
   })
 }
 
+//用户列表
+export function getList() {
+  return request({
+    url: '/user/list',
+    method: 'get'
+  })
+}
+
+//用户基本信息
 export function getInfo() {
   return request({
     url: '/user/info',
@@ -19,6 +29,7 @@ export function getInfo() {
   })
 }
 
+//用户重要信息
 export function getImpInfo() {
   return request({
     url: '/user/impinfo',
@@ -26,6 +37,7 @@ export function getImpInfo() {
   })
 }
 
+//用户角色
 export function getUserRole() {
   return request({
     url: '/user/getUserRole',
@@ -33,6 +45,7 @@ export function getUserRole() {
   })
 }
 
+//更新谷歌状态
 export function updateGoogleStatus(status) {
   return request({
     url: '/user/updateGoogleStatus',

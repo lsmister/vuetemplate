@@ -3,7 +3,7 @@
 /* fade */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.18s;
+  transition: opacity 0.3s;
 }
 
 .fade-enter,
@@ -14,23 +14,23 @@
 /* fade-transform */
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .1s;
+  transition: all .15s;
 }
 
 .fade-transform-enter {
   opacity: 0;
-  transform: translateX(-5px);
+  transform: translateX(-8px);
 }
 
 .fade-transform-leave-to {
   opacity: 0;
-  transform: translateX(5px);
+  transform: translateX(6px);
 }
 
 /* breadcrumb transition */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all .10s;
 }
 
 .breadcrumb-enter,

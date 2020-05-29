@@ -32,9 +32,14 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-          //const routes = await store.dispatch('user/getUserRole') //通过用户角色获取路由
+          const { roles } = await store.dispatch('user/getInfo')
 
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // console.log(router.options.routes)
+          router.addRoutes(accessRoutes)
+          router.options.routes = router.options.routes.concat(accessRoutes)
+
+          //const routes = await store.dispatch('user/getUserRole') //通过用户角色获取路由
           // console.log(dataArrayToRoutes(routes))
           // const asyncRoutes = dataArrayToRoutes(routes)
           // router.addRoutes(asyncRoutes)
@@ -50,8 +55,9 @@ router.beforeEach(async(to, from, next) => {
           // await store.dispatch('user/resetToken')
           // Message.error(error || 'Has Error')
           // next(`/login?redirect=${to.path}`)
-          console.log('错误: '+error)
-          next()
+          await store.dispatch('user/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
       }
