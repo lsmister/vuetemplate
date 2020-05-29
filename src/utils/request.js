@@ -29,6 +29,7 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
+
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
@@ -41,6 +42,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    // console.log(res)
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
@@ -57,9 +59,10 @@ service.interceptors.response.use(
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
-          this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-          location.reload()
+        }).then(function(){
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))

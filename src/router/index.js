@@ -81,7 +81,7 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 export const asyncRoutes = [
@@ -92,7 +92,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
-      title: 'permission',
+      title: '角色权限',
       icon: 'lock'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -102,17 +102,26 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/permission-list'),
         name: 'permissionList',
         meta: {
-          title: '权限管理'
-          // roles: ['admin']
+          title: '权限管理',
+          icon: 'list',
         }
       },
       {
         path: 'role',
         component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
+        name: 'Role',
         meta: {
-          title: '角色管理'
-          // roles: ['admin']
+          title: '角色管理',
+          icon: 'list',
+        }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/permission/user'),
+        name: 'User',
+        meta: {
+          title: '用户管理',
+          icon: 'list',
         }
       }
     ]
