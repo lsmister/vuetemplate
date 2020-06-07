@@ -89,6 +89,14 @@
           </el-select>
         </el-form-item>
 
+        <el-form-item label="登录密码" prop="password">
+          <el-input v-model="subForm.name" placeholder="请输入密码" show-password />
+        </el-form-item>
+
+        <el-form-item label="头像">
+          <el-button type="primary" @click="selectAvatar">选择头像</el-button>
+        </el-form-item>
+
         <el-form-item label="状态" prop="status">
           <el-radio v-model="subForm.status" :label="1">启用</el-radio>
           <el-radio v-model="subForm.status" :label="0">禁用</el-radio>
@@ -102,6 +110,15 @@
           确认
         </el-button>
       </div>
+    </el-dialog>
+
+    <el-dialog title="选择头像" :visible.sync="dialogAvatarVisible" width="40%">
+      <el-row :gutter="20">
+        <el-col :span="6"><div class="grid-content bg-purple">1111</div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">2222</div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">3333</div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">4444</div></el-col>
+      </el-row>
     </el-dialog>
 
   </div>
@@ -140,6 +157,7 @@ export default {
       },
       dialogStatus: '',
       dialogFormVisible: false,
+      dialogAvatarVisible: false,
       listLoading: true,
       checkStrictly: false,
       textMap: {
@@ -150,6 +168,7 @@ export default {
         role_id: [{ required: true, message: '请选择角色', trigger: 'change' }],
         name: [{ required: true, message: '请填写名称', trigger: 'blur' }],
         username: [{ required: true, message: '请填写登录账号', trigger: 'blur' }],
+        password: [{ required: true, message: '请填写登录密码', trigger: 'blur' }],
       }
     }
   },
@@ -165,12 +184,10 @@ export default {
     initForm() {
       this.subForm = {
         id: undefined,
+        username: '',
         name: '',
-        description: '',
-        url: '',
-        sort: 0,
-        status: 1,
-        parent_id: ''
+        role_id: '',
+        status: 1
       }
     },
     handleFilter() {
@@ -200,7 +217,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async() => {
-        const result = await UserOpt.deletePermission(row.id)
+        const result = await UserOpt.deleteUser(row.id)
         this.list.splice($index, 1)
         this.$message({
           type: 'success',
@@ -211,9 +228,10 @@ export default {
       })
     },
     createData() {
+      // console.log(this.subForm)
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          UserOpt.addPermission(this.subForm).then((result) => {
+          UserOpt.addUser(this.subForm).then((result) => {
             this.subForm.id = result.data.id
             this.list.unshift(this.subForm)
             this.dialogFormVisible = false
@@ -256,7 +274,7 @@ export default {
     },
     getRoleList() {
       UserOpt.getRoleList().then(response => {
-        console.log(response)
+        // console.log(response)
         this.roleList = response.data
       }).catch(error => {
         console.log('角色列表获取失败')
@@ -279,6 +297,9 @@ export default {
 
         this.list[index].status = row.status
       })
+    },
+    selectAvatar() {
+      this.dialogAvatarVisible = true
     }
   }
 }

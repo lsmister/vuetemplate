@@ -84,6 +84,41 @@ export function updateStatus(id, status) {
   })
 }
 
+// 添加用户
+export function addUser(data) {
+  return request({
+    url: '/user/add',
+    method: 'post',
+    headers: { 'Content-type': 'application/json' },
+    data,
+    transformRequest: [function(data) {
+      return JSON.stringify(data)
+    }]
+  })
+}
+
+// 更新用户
+export function updateUser(id, data) {
+  return request({
+    url: `/user/update/${id}`,
+    method: 'put',
+    headers: { 'Content-type': 'application/json' },
+    data,
+    transformRequest: [function(data) {
+      return JSON.stringify(data)
+    }]
+  })
+}
+
+// 删除用户
+export function deleteUser(id) {
+  return request({
+    url: `/user/delete/${id}`,
+    method: 'delete',
+    params: { id: id }
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',
