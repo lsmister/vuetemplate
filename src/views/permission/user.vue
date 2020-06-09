@@ -90,7 +90,7 @@
         </el-form-item>
 
         <el-form-item label="登录密码" prop="password">
-          <el-input v-model="subForm.name" placeholder="请输入密码" show-password />
+          <el-input v-model="subForm.password" placeholder="请输入密码" show-password />
         </el-form-item>
 
         <el-form-item label="头像">
@@ -112,12 +112,28 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="选择头像" :visible.sync="dialogAvatarVisible" width="40%">
-      <el-row :gutter="20">
-        <el-col :span="6"><div class="grid-content bg-purple">1111</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple">2222</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple">3333</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple">4444</div></el-col>
+    <el-dialog title="选择头像" :visible.sync="dialogAvatarVisible" width="25%">
+      <el-row>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('1-avatar.jpeg')" src="../../assets/user/1-avatar.jpeg" alt="图片1" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('2-avatar.jpeg')" src="../../assets/user/2-avatar.jpeg" alt="图片2" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('3-avatar.jpeg')" src="../../assets/user/3-avatar.jpeg" alt="图片3" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('4-avatar.jpeg')" src="../../assets/user/4-avatar.jpeg" alt="图片4" width="100%"></div></el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('5-avatar.jpeg')" src="../../assets/user/5-avatar.jpeg" alt="图片5" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('6-avatar.jpeg')" src="../../assets/user/6-avatar.jpeg" alt="图片6" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('7-avatar.jpeg')" src="../../assets/user/7-avatar.jpeg" alt="图片7" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('8-avatar.jpeg')" src="../../assets/user/8-avatar.jpeg" alt="图片8" width="100%"></div></el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('9-avatar.jpeg')" src="../../assets/user/9-avatar.jpeg" alt="图片9" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('10-avatar.jpeg')" src="../../assets/user/10-avatar.jpeg" alt="图片10" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('11-avatar.jpeg')" src="../../assets/user/11-avatar.jpeg" alt="图片11" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('12-avatar.jpeg')" src="../../assets/user/12-avatar.jpeg" alt="图片12" width="100%"></div></el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('13-avatar.jpeg')" src="../../assets/user/13-avatar.jpeg" alt="图片13" width="100%"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"><img class="custom-img" @click="optAvatar('14-avatar.jpeg')" src="../../assets/user/14-avatar.jpeg" alt="图片14" width="100%"></div></el-col>
       </el-row>
     </el-dialog>
 
@@ -127,6 +143,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import * as UserOpt from '@/api/user'
+import $ from 'jquery'
 
 const statusOptions = [
   { id: 0, name: '禁用' },
@@ -143,8 +160,10 @@ export default {
       subForm: {
         id: undefined,
         username: '',
+        password: '',
         name: '',
         role_id: '',
+        avatar: '',
         status: 1
       },
       statusOptions,
@@ -185,8 +204,10 @@ export default {
       this.subForm = {
         id: undefined,
         username: '',
+        password: '',
         name: '',
         role_id: '',
+        avatar: '',
         status: 1
       }
     },
@@ -228,12 +249,11 @@ export default {
       })
     },
     createData() {
-      // console.log(this.subForm)
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           UserOpt.addUser(this.subForm).then((result) => {
             this.subForm.id = result.data.id
-            this.list.unshift(this.subForm)
+            this.list.unshift(result.data)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -300,9 +320,22 @@ export default {
     },
     selectAvatar() {
       this.dialogAvatarVisible = true
+    },
+    optAvatar(name) {
+      this.subForm.avatar = name
+      this.$message({
+        message: '头像已选择',
+        type: 'success'
+      })
     }
   }
 }
+
+$(document).on('click', '.custom-img',function(){
+  $('.custom-img').css("border-color", "#fff")
+  $(this).css("border-color", "#87CEFA")
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -321,6 +354,17 @@ export default {
     }
     .filter-container {
       padding-bottom: 2px;
+    }
+    .custom-img {
+      border: 5px solid #fff;
+    }
+    .custom-img:hover {
+      border: 5px solid #87CEFA;
+      cursor: pointer;
+      transition: border-color 0.5s;
+      -moz-transition: border-color 0.5s;	/* Firefox 4 */
+      -webkit-transition: border-color 0.5s;	/* Safari 和 Chrome */
+      -o-transition: border-color 0.5s;	/* Opera */
     }
   }
   .pagination-container {

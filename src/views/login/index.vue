@@ -42,7 +42,7 @@
 
       <el-form-item prop="googleCode">
         <span class="svg-container">
-          <svg-icon icon-class="authentication" />
+          <svg-icon icon-class="google" />
         </span>
         <el-input
           ref="googleCode"
@@ -56,7 +56,7 @@
         />
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" class="cusbutton" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
   </div>
@@ -268,6 +268,14 @@ export default {
       .thirdparty-button {
         display: none;
       }
+    }
+
+    .cusbutton {
+      width: 100%;
+      margin-bottom: 30px;
+      padding: 13px 20px;
+      font-size: 17px;
+      letter-spacing: 5px
     }
 
   }
